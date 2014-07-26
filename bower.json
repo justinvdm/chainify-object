@@ -1,0 +1,22 @@
+{
+  "name": "chaingun",
+  "main": "chaingun.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/justinvdm/chaingun",
+  "authors": [
+    "justinvdm <justinvdm.0.1.0@gmail.com>"
+  ],
+  "description": "make an object's functions chainable",
+  "keywords": [
+    "chain",
+    "chaining"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

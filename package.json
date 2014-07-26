@@ -1,0 +1,26 @@
+{
+  "name": "chaingun",
+  "version": "0.0.0",
+  "description": "make an object's functions chainable",
+  "main": "chaingun.js",
+  "scripts": {
+    "test": "mocha -R spec chaingun.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/justinvdm/chaingun.git"
+  },
+  "keywords": [
+    "chain",
+    "chaining"
+  ],
+  "author": "justinvdm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justinvdm/chaingun/issues"
+  },
+  "homepage": "https://github.com/justinvdm/chaingun",
+  "devDependencies": {
+    "mocha": "^1.19.0"
+  }
+}
