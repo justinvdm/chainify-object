@@ -43,4 +43,4 @@
     define(function() { return chaingun; });
   else
     this.chaingun = chaingun;
-})();
+}).call(this);
