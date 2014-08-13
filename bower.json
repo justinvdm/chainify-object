@@ -1,7 +1,7 @@
 {
   "name": "chaingun",
   "main": "chaingun.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/justinvdm/chaingun",
   "authors": [
     "justinvdm <justinvdm.0.1.0@gmail.com>"
