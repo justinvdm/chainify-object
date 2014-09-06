@@ -42,7 +42,7 @@ $ bower install chaingun
 ## api
 
 
-### `chaingun(obj)`
+### `chaingun(obj[, opts])`
 
 Returns a chainable version of the given object.
 
@@ -50,12 +50,22 @@ When the chainable is invoked, a chain is started. A chain consists of 'curried'
 
 
 ```javascript
-var chain = chaingun({add: function(a, b) { return a + b; }});
+var chained = chaingun({add: function(a, b) { return a + b; }});
 
-chain(2)
+chained(2)
   .add(3)
   .add(5);
   () // 10
+```
+
+The chain's value can be reset explicitly by invoking the chain directly with a value:
+
+```javascript
+var chained = chaingun({});
+var chain = chain(2);
+chain();  // 2
+chain(3);
+chain();  // 3
 ```
 
 If `obj` is a function, it will be invoked at the start of the chain. Its return value will be used as the starting value of the chain:
@@ -65,11 +75,40 @@ If `obj` is a function, it will be invoked at the start of the chain. Its return
 function thing(a, b) { return a + b; }
 thing.multiply = function(a, b) { return a * b; };
 
-var chain = chaingun(thing);
+var chained = chaingun(thing);
 
-chain(2, 3)
+chained(2, 3)
   .multiply(4)
   ();  // 20
+```
+
+if `'exits'` is provided as an option, the functions with the given names will return the chain's current value instead of returning the chain:
+
+```javascript
+var chained = chaingun(
+  {foo: function(v) { return v * 10; }},
+  {exits: ['foo']});
+
+chained(2).foo();  // 20
+```
+
+if `'get'` is provided as an option, it will be used as a hook whenever the chain's value is requested:
+
+```javascript
+var chained = chaingun({}, {get: function(v) { return v * 10; }})
+var chain = chained(2);
+chain();  // 20
+```
+
+if `'set'` is provided as an option, it will be used as a hook whenever the chain's value is changed:
+
+```javascript
+var chained = chaingun({}, {set: function(v) { return v * 10; }})
+var chain = thing(2);
+chain();  // 20
+
+chain(3);
+chain();  // 30
 ```
 
 `obj`'s properties can be accessed directly from the chainable:
@@ -82,9 +121,10 @@ var obj = {
   quux: function() {}
 };
 
-var chain = chaingun(obj);
-chain.foo === obj.foo;  // true
-chain.bar === obj.bar;  // true
-chain.baz === obj.baz;  // true
-chain.quux === obj.quux;  // true
+var chained = chaingun(obj);
+chained.foo === obj.foo;  // true
+chained.bar === obj.bar;  // true
+chained.baz === obj.baz;  // true
+chained.quux === obj.quux;  // true
 ```
+
