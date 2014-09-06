@@ -1,6 +1,6 @@
 {
   "name": "chaingun",
-  "version": "0.1.2",
+  "version": "0.2.0-beta",
   "description": "make an object's functions chainable",
   "main": "chaingun.js",
   "scripts": {
