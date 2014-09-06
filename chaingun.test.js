@@ -23,12 +23,12 @@ describe("chaingun", function() {
   });
 
   it("should support chaining of the object's function properties", function() {
-    var chain = chaingun({
+    var thing = chaingun({
       add: function(a, b) { return a + b; },
       multiply: function(a, b) { return a * b; }
     });
 
-    var result = chain(2)
+    var result = thing(2)
       .add(3)
       .multiply(5)
       .add(5)
@@ -69,5 +69,18 @@ describe("chaingun", function() {
     var thing = chaingun({}, {set: function(v) { return v * 10; }});
     var t = thing(2);
     assert.equal(t(), 20);
+  });
+
+  it("should support custom exits", function() {
+    var thing = chaingun({
+      add: function(a, b) { return a + b; },
+      multiply: function(a, b) { return a * b; }
+    }, {
+      exits: ['add', 'multiply']
+    });
+
+    var t = thing(2);
+    assert.equal(t.add(3), 5);
+    assert.equal(t.multiply(2), 10);
   });
 });

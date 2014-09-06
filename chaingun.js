@@ -8,20 +8,22 @@
 
     var get = opts.get || identity;
     var set = opts.set || identity;
+    var exits = lookup(opts.exits || []);
 
     function _chained_(v) {
-      function _chain_(v) {
+      var _chain_ = function _chain_(v) {
         if (!arguments.length) return get(curr);
-        curr = set(v)
+        curr = set(v);
         return _chain_;
       };
 
-      _chain_ = extend(_chain_, obj, function(fn) {
+      _chain_ = extend(_chain_, obj, function(fn, name) {
         if (typeof fn != 'function') return;
 
         return function() {
           Array.prototype.unshift.call(arguments, curr);
           _chain_(fn.apply(this, arguments));
+          if (name in exits) return _chain_();
           return _chain_;
         };
       });
@@ -40,11 +42,19 @@
 
     for (var k in source) {
       if (!source.hasOwnProperty(k)) return;
-      result = fn.call(this, source[k]);
+      result = fn.call(this, source[k], k);
       if (typeof result != 'undefined') target[k] = result;
     }
 
     return target;
+  }
+
+
+  function lookup(arr) {
+    var result = {};
+    var i = arr.length;
+    while (i--) result[arr[i]] = 1;
+    return result;
   }
 
 
