@@ -49,4 +49,25 @@ describe("chaingun", function() {
 
     assert.equal(result, 20);
   });
+
+  it("should allow its current value to be settable", function() {
+    var thing = chaingun({});
+    var t = thing(2);
+    assert.equal(t(), 2);
+
+    t(3);
+    assert.equal(t(), 3);
+  });
+
+  it("should support a get hook", function() {
+    var thing = chaingun({}, {get: function(v) { return v * 10; }});
+    var t = thing(2);
+    assert.equal(t(), 20);
+  });
+
+  it("should support a set hook", function() {
+    var thing = chaingun({}, {set: function(v) { return v * 10; }});
+    var t = thing(2);
+    assert.equal(t(), 20);
+  });
 });

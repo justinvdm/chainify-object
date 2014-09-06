@@ -1,20 +1,33 @@
 (function() {
-  function chaingun(obj) {
+  function chaingun(obj, opts) {
+    opts = opts || {};
+
+    var init = typeof obj == 'function'
+      ? obj
+      : identity;
+
+    var get = opts.get || identity;
+    var set = opts.set || identity;
+
     function _chained_(v) {
-      function _chain_() { return curr; }
+      function _chain_(v) {
+        if (!arguments.length) return get(curr);
+        curr = set(v)
+        return _chain_;
+      };
 
-      var curr = v;
-      if (typeof obj == 'function') curr = obj.apply(this, arguments);
-
-      return extend(_chain_, obj, function(fn) {
+      _chain_ = extend(_chain_, obj, function(fn) {
         if (typeof fn != 'function') return;
 
         return function() {
           Array.prototype.unshift.call(arguments, curr);
-          curr = fn.apply(this, arguments);
-          return this;
+          _chain_(fn.apply(this, arguments));
+          return _chain_;
         };
       });
+
+      _chain_(init.apply(_chain_, arguments));
+      return _chain_;
     }
 
     return extend(_chained_, obj);
