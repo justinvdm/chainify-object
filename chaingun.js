@@ -17,6 +17,8 @@
         return _chain_;
       };
 
+      _chain_._chain_ = true
+
       _chain_ = extend(_chain_, obj, function(fn, name) {
         if (typeof fn != 'function') return;
 
