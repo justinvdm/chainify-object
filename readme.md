@@ -1,4 +1,4 @@
-# chainify
+# chainify-object
 
 make an object's functions chainable.
 
