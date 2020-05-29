@@ -20,6 +20,13 @@
     "type": "git",
     "url": "git://github.com/justinvdm/chainify-object.git"
   },
+  "files": [
+    "*.js",
+    "utils/*.js",
+    "*.mjs",
+    "dist",
+    "index.d.ts"
+  ],
   "keywords": [
     "chain",
     "chaining",
