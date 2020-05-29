@@ -1,6 +1,6 @@
 {
   "name": "chainify-object",
-  "version": "0.2.0-beta",
+  "version": "0.3.0",
   "description": "make an object's functions chainable",
   "type": "commonjs",
   "main": "./index.js",
