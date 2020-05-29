@@ -1,12 +1,12 @@
-# chaingun
+# chainify
 
 make an object's functions chainable.
 
 
 ```javascript
-var chaingun = require('chaingun');
+var chainify = require('chainify-object');
 
-var chain = chaingun({
+var chain = chainify({
   add: function(a, b) { return a + b; },
   multiply: function(a, b) { return a * b; }
 });
@@ -20,29 +20,10 @@ chain(2)
 ```
 
 
-## install
-
-node:
-
-```
-$ npm install chaingun
-```
-
-browser:
-
-```
-$ bower install chaingun
-```
-
-```html
-<script src="/bower_components/chaingun/chaingun.js"></script>
-```
-
-
 ## api
 
 
-### `chaingun(obj[, opts])`
+### `chainify(obj[, opts])`
 
 Returns a chainable version of the given object.
 
@@ -50,7 +31,7 @@ When the chainable is invoked, a chain is started. A chain consists of 'curried'
 
 
 ```javascript
-var chained = chaingun({add: function(a, b) { return a + b; }});
+var chained = chainify({add: function(a, b) { return a + b; }});
 
 chained(2)
   .add(3)
@@ -61,7 +42,7 @@ chained(2)
 The chain's value can be reset explicitly by invoking the chain directly with a value:
 
 ```javascript
-var chained = chaingun({});
+var chained = chainify({});
 var chain = chain(2);
 chain();  // 2
 chain(3);
@@ -75,7 +56,7 @@ If `obj` is a function, it will be invoked at the start of the chain. Its return
 function thing(a, b) { return a + b; }
 thing.multiply = function(a, b) { return a * b; };
 
-var chained = chaingun(thing);
+var chained = chainify(thing);
 
 chained(2, 3)
   .multiply(4)
@@ -85,7 +66,7 @@ chained(2, 3)
 if `'exits'` is provided as an option, the functions with the given names will return the chain's current value instead of returning the chain:
 
 ```javascript
-var chained = chaingun(
+var chained = chainify(
   {foo: function(v) { return v * 10; }},
   {exits: ['foo']});
 
@@ -95,7 +76,7 @@ chained(2).foo();  // 20
 if `'get'` is provided as an option, it will be used as a hook whenever the chain's value is requested:
 
 ```javascript
-var chained = chaingun({}, {get: function(v) { return v * 10; }})
+var chained = chainify({}, {get: function(v) { return v * 10; }})
 var chain = chained(2);
 chain();  // 20
 ```
@@ -103,7 +84,7 @@ chain();  // 20
 if `'set'` is provided as an option, it will be used as a hook whenever the chain's value is changed:
 
 ```javascript
-var chained = chaingun({}, {set: function(v) { return v * 10; }})
+var chained = chainify({}, {set: function(v) { return v * 10; }})
 var chain = thing(2);
 chain();  // 20
 
@@ -121,10 +102,39 @@ var obj = {
   quux: function() {}
 };
 
-var chained = chaingun(obj);
+var chained = chainify(obj);
 chained.foo === obj.foo;  // true
 chained.bar === obj.bar;  // true
 chained.baz === obj.baz;  // true
 chained.quux === obj.quux;  // true
 ```
 
+## install
+
+You can use this library as the npm package `chainify-object`:
+
+```
+npm i chainify-object
+# or
+yarn add chainify-object
+```
+
+It can be used in both es-module-aware and commonjs bundlers/environments.
+
+```js
+// es module
+import chainifyObject from 'chainify-object'
+
+// commonjs
+const chainifyObject = require('chainify-object')
+```
+
+It can also be used a `<script>`:
+
+```html
+<script crossorigin src="https://unpkg.com/chainify-object/dist/umd/chainify-object.js"></script>
+
+<script>
+  chainifyObject()
+</script>
+```

@@ -1,26 +1,48 @@
 {
-  "name": "chaingun",
+  "name": "chainify-object",
   "version": "0.2.0-beta",
   "description": "make an object's functions chainable",
-  "main": "chaingun.js",
+  "type": "commonjs",
+  "main": "./index.js",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js"
+  },
   "scripts": {
-    "test": "mocha -R spec chaingun.test.js"
+    "build": "otr build",
+    "lint": "otr lint",
+    "format": "otr format",
+    "test": "otr test",
+    "release": "otr release",
+    "checks": "yarn lint && yarn build && yarn test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/justinvdm/chaingun.git"
+    "url": "git://github.com/justinvdm/chainify-object.git"
   },
   "keywords": [
     "chain",
-    "chaining"
+    "chaining",
+    "chainify",
+    "object"
   ],
   "author": "justinvdm",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/justinvdm/chaingun/issues"
+    "url": "https://github.com/justinvdm/chainify-object/issues"
   },
-  "homepage": "https://github.com/justinvdm/chaingun",
+  "homepage": "https://github.com/justinvdm/chainify-object",
+  "oftherivier": {
+    "type": "es5",
+    "src": "index.js",
+    "libName": "chainifyObject"
+  },
+  "renovate": {
+    "extends": [
+      "github>oftherivier/tools"
+    ]
+  },
   "devDependencies": {
-    "mocha": "^1.19.0"
+    "@oftherivier/tools": "0.1.41"
   }
 }
